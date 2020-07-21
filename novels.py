@@ -16,9 +16,10 @@ def getPage(url):
             time.sleep(2 ** espera)
             espera += 1
 
-
 def main():
-    novels = {'cbi': 'https://boxnovel.com/novel/castle-of-black-iron/chapter-', 'sgg': 'https://boxnovel.com/novel/super-gene/chapter-', 'sas': 'https://boxnovel.com/novel/strongest-abandoned-son/chapter-', 'atg': 'https://www.wuxiaworld.com/novel/against-the-gods/atg-chapter-'}
+    novels = {'cbi': 'https://boxnovel.com/novel/castle-of-black-iron/chapter-', 'sgg': 'https://boxnovel.com/novel/super-gene-webnovel/chapter-',
+              'sas': 'https://boxnovel.com/novel/strongest-abandoned-son/chapter-', 'atg': 'https://www.wuxiaworld.com/novel/against-the-gods/atg-chapter-',
+              'vm' : 'https://boxnovel.com/novel/versatile-mage/chapter-'}
     total = []
     if len(sys.argv) < 4:
         inicio = int(sys.argv[2])
@@ -29,17 +30,15 @@ def main():
 
     url = novels[sys.argv[1]]
     for i in range(inicio, fim):
-        response = getPage(url + str(i))
+        response = getPage(f"{url}{i}") # f"" e a funcao de template literal onde coloca a experessao entre {} e ela e substituida na string ex print(f"{1+1} vs {nomeVariavel}")
         doc = Document(response.text)
         fileName = re.sub(r'[^a-zA-Z0-9]+', ' ', doc.title())
         total.append(doc.summary())
         print(i)
 
-    f = open(fileName + str(fim-1) + '.html', 'w')
+    f = open(f"{fileName}{fim-1}.html", 'w')
     for i in total:
         f.write(i)
     f.close()
 
-
-if __name__ == "__main__":
-    main()
+main()
